@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+        /*#myCourse td{*/
+        /*height: 75px;*/
+        /*}*/
+        /*#myCourse tr{*/
+        /*line-height: 75px;*/
+        /*}*/
+
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏;传入参数-->
+<div th:replace="dashboard::#topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏;传入参数-->
+        <div th:replace="dashboard::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="row" style="height:700px">
+                <div class="col-md-9">
+                    <h1 class="h2">我的学生</h1>
+                    <div>
+                        <table id="myStudent" class="table table-hover table-light">
+                            <thead>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>班级</th>
+                                <th>缺勤率</th>
+                                <th>操作</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="student:${studentList}">
+                                    <td th:text="${student.studentId}"></td>
+                                    <td th:text="${student.studentName}"></td>
+                                    <td th:text="${student.className}"></td>
+                                    <td>0.0%</td>
+                                    <td><a class="btn btn-primary btn-sm" style="color:white">详细记录</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row" style="position: absolute;bottom: 0px">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:class="${prePage==0?'page-item disabled':'page-item'}">
+                            <a class="page-link"
+                               th:href="@{/myStudent/page(curPage=${prePage})}" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="@{/myStudent/page(curPage=${curPage}-2)}">[[${curPage-2}]]</a></li>
+                        <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="@{/myStudent/page(curPage=${curPage}-1)}">[[${curPage-1}]]</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">[[${curPage}]]</a></li>
+                        <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="@{/myStudent/page(curPage=${curPage}+1)}">[[${curPage+1}]]</a></li>
+                        <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="@{/myStudent/page(curPage=${curPage}+2)}">[[${curPage+2}]]</a></li>
+                        <li class="page-item" th:class="${nextPage==0?'page-item disabled':'page-item'}">
+                            <a class="page-link"
+                               th:href="@{/myStudent/page(curPage=${nextPage})}" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js" ></script>
+<script type="text/javascript" src="/static/js/popper.min.js" ></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="/static/js/feather.min.js" ></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script type="text/javascript" src="/static/js/Chart.min.js" ></script>
+
+
+</body>
+</html>
