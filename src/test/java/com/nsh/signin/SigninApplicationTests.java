@@ -86,6 +86,10 @@ public class SigninApplicationTests {
         checkLogService.startCheckin("liuminghao","软测五班",list);
     }
 
+    /**
+     * 测试api能力
+     * @throws IOException
+     */
     @Test
     public void testApi() throws IOException {
         //将图片转成byte数组
