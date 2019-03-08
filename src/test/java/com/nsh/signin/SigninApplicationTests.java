@@ -73,6 +73,7 @@ public class SigninApplicationTests {
         System.out.println(date1.compareTo(new Date()));
     }
 
+
     @Test
     public void startCheckin(){
         List<StudentClass> list = new ArrayList<>();
@@ -97,6 +98,9 @@ public class SigninApplicationTests {
         String result = FaceSearch.searchFace(bytes);
         System.out.println(result);
     }
+
+    
+    public void testBranch(){}
 
 }
 
