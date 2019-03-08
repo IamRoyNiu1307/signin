@@ -100,7 +100,9 @@ public class SigninApplicationTests {
     }
 
     
-    public void testBranch(){}
+    public void testBranch(){
+        System.out.println(2);
+    }
 
 }
 
