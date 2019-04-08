@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nsh.signin.api.FaceRegister;
 import com.nsh.signin.api.FaceSearch;
-import com.nsh.signin.myconst.WXConst;
+import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.service.StudentAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +29,7 @@ public class FaceRegisterController {
 
     @ResponseBody
     @RequestMapping("/registerFace")
-    public String registerFace(HttpServletRequest request,
-                               @RequestParam(value = "file", required = false) MultipartFile file,
+    public String registerFace(@RequestParam(value = "file", required = false) MultipartFile file,
                                @RequestParam(value = "studentid", required = false) String studentid) throws IOException {
         System.out.println("执行 人脸注册...");
         //将图像转成byte数组，返回查询结果
@@ -43,7 +42,7 @@ public class FaceRegisterController {
             return "{\"error_msg\":\"面部已注册\"}";
         }
         //否则 将面部添加到人脸库中
-        String result = FaceRegister.add(file.getBytes(), WXConst.GROUPID,studentid);
+        String result = FaceRegister.add(file.getBytes(), MyConst.GROUPID,studentid);
         //将结果解析成json
         JsonObject resultJson = jp.parse(result).getAsJsonObject();
         //如果结果中的error_msg=SUCCESS则说明注册成功，将has_registed设为1

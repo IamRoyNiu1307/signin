@@ -1,19 +1,17 @@
 package com.nsh.signin.entity;
 
-
-import java.util.Objects;
-
-
 public class TeacherCourse {
-    private int id;
+    private Integer id;
+
     private String teacherId;
+
     private Integer courseId;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -22,7 +20,7 @@ public class TeacherCourse {
     }
 
     public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
+        this.teacherId = teacherId == null ? null : teacherId.trim();
     }
 
     public Integer getCourseId() {
@@ -31,20 +29,5 @@ public class TeacherCourse {
 
     public void setCourseId(Integer courseId) {
         this.courseId = courseId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TeacherCourse that = (TeacherCourse) o;
-        return id == that.id &&
-                Objects.equals(teacherId, that.teacherId) &&
-                Objects.equals(courseId, that.courseId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, teacherId, courseId);
     }
 }

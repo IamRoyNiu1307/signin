@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -23,14 +24,13 @@ public class CourseController {
 
     /**
      * 页面跳转
-     * @param request
      * @param map
      * @return
      */
     @RequestMapping("/page")
-    public String toCourse(HttpServletRequest request, Map<String,Object> map){
+    public String toCourse(HttpSession session, Map<String,Object> map){
 
-        TeacherInfo teacher = (TeacherInfo)request.getSession().getAttribute("teacher");
+        TeacherInfo teacher = (TeacherInfo)session.getAttribute("teacher");
 
         //根据教师id获取一周内所有的课程
         List<ClassCourse> classCourseList = scheduleService.getClassCourseList(teacher.getTeacherId());
@@ -39,11 +39,11 @@ public class CourseController {
             ClassCourse current = classCourseList.get(i);
             //以当前工作日+课程序号(周*的第*节课)为键，课程信息为值
             map.put(current.getWorkday() + current.getNo(), current);
-            System.out.println("set map: " + current.getWorkday() + current.getNo() + " --> " + current.toString());
+            //System.out.println("set map: " + current.getWorkday() + current.getNo() + " --> " + current.toString());
 
         }
 
-        request.getSession().setAttribute("activeTag","myCourse");
+        session.setAttribute("activeTag","myCourse");
         return "myCourse";
     }
 

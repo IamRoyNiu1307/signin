@@ -16,7 +16,7 @@
 	<body class="text-center">
 		<form class="form-signin" action="/teacher/login" method="post">
 			<img class="mb-4" src="/static/img/bootstrap-solid.svg" alt="" width="72" height="72">
-			<h1 class="h3 mb-3 font-weight-normal">郑大考勤-教师端</h1>
+			<h1 class="h3 mb-3 font-weight-normal">郑大考勤系统</h1>
 			<h1 class="h5 mb-3 font-weight-normal" style="color:red" th:if="${{login_error}}!=null" th:text="${{login_error}}"></h1>
 			<label class="sr-only">账号</label>
 			<input type="text" name="teacherId" class="form-control" placeholder="请输入教师账号" required="" autofocus="true">
@@ -28,9 +28,7 @@
         </label>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-			<p class="mt-5 mb-3 text-muted">© 2018-2019</p>
-			<a class="btn btn-sm">中文</a>
-			<a class="btn btn-sm">English</a>
+			<p class="mt-5 mb-3 text-muted">© 2019-2020</p>
 		</form>
 
 	</body>

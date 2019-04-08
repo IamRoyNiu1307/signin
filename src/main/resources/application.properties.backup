@@ -3,7 +3,7 @@ server.port=8080
 #spring.servlet.multipart.max-file-size = 102400
 #\u8BF7\u6C42\u603B\u6587\u4EF6\u5927\u5C0F\u9650\u5236
 #spring.servlet.multipart.max-request-size=1024000
-spring.mvc.static-path-pattern=/static/**
+#spring.mvc.static-path-pattern=/static/**
 spring.main.banner-mode=off
 spring.mvc.favicon.enabled=true
 logging.level.root=info
@@ -19,6 +19,7 @@ logging.level.com.shyroke.mapper=debug
 
 ##########################  mybatis   ##########################
 #mybatis.mapper-locations=classpath:mybatis/*.xml
+mybatis.mapper-locations=classpath:/mybatis/mappers/*.xml
 mybatis.configuration.map-underscore-to-camel-case=true
 
 ##########################  druid\u914D\u7F6E   ##########################
@@ -50,10 +51,10 @@ spring.datasource.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowS
 spring.datasource.useGlobalDataSourceStat=true
 
 #\u5206\u9875
-pagehelper.helper-dialect: mysql
-pagehelper.reasonable: true
-pagehelper.support-methods-arguments: true
-pagehelper.params: count=countSql
+#pagehelper.helper-dialect: mysql
+#pagehelper.reasonable: true
+#pagehelper.support-methods-arguments: true
+#pagehelper.params: count=countSql
 
 
 
@@ -77,3 +78,4 @@ log4j.appender.stdout.Threshold =DEBUG
 log4j.appender.stdout.layout \u00A0\u00A0\u00A0=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern= \u00A0%-d{yyyy-MM-dd HH:mm:ss} \u00A0[ %p ] \u00A0%m%n
 
+spring.thymeleaf.cache=false

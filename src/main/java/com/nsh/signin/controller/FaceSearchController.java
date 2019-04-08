@@ -33,7 +33,7 @@ public class FaceSearchController {
 
     @ResponseBody
     @RequestMapping("/searchFace/baiduAPI")
-    public Map searchFaceByBaidu(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file,
+    public Map searchFaceByBaidu(@RequestParam(value = "file", required = false) MultipartFile file,
                             @RequestParam(value = "studentid", required = false) String studentid,
                             @RequestParam(value = "checkinId", required = false) Integer checkinId) throws IOException {
         System.out.println("执行 人脸识别...");
@@ -90,7 +90,7 @@ public class FaceSearchController {
 
     @ResponseBody
     @RequestMapping("/searchFace")
-    public Map searchFaceCustom(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file,
+    public Map searchFaceCustom(@RequestParam(value = "file", required = false) MultipartFile file,
                           @RequestParam(value = "studentid", required = false) String studentid,
                           @RequestParam(value = "checkinId", required = false) Integer checkinId) throws IOException {
 

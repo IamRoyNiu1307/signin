@@ -1,8 +1,9 @@
 package com.nsh.signin.controller;
 
-import com.nsh.signin.dao.TeacherInfoDao;
+import com.nsh.signin.entity.TabClass;
 import com.nsh.signin.entity.TeacherAccount;
 import com.nsh.signin.entity.TeacherInfo;
+import com.nsh.signin.service.TabClassService;
 import com.nsh.signin.service.TeacherAccountService;
 import com.nsh.signin.service.TeacherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +27,8 @@ public class TeacherAccountController {
     private TeacherAccountService teacherAccountService;
     @Autowired
     private TeacherInfoService teacherInfoService;
+    @Autowired
+    private TabClassService tabClassService;
 
     /**
      * 页面跳转，重定向到后台首页
@@ -40,19 +45,19 @@ public class TeacherAccountController {
      * 教师登录
      * @param teacherAccount 教师账号
      * @param pageParams
-     * @param request
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String teacherLogin(TeacherAccount teacherAccount, Map<String,String> pageParams,
-                               HttpServletRequest request){
-        System.out.println("request to login : "+ teacherAccount.toString());
+                               HttpSession session){
         //验证账号密码正确性
         boolean result = teacherAccountService.checkout(teacherAccount);
         if(result){
             TeacherInfo teacherInfo = teacherInfoService.getTeacherInfo(teacherAccount.getTeacherId());
-            request.getSession().setAttribute("teacher",teacherInfo);
-            request.getSession().setAttribute("activeTag","home");
+            List<TabClass> classList = tabClassService.getTabClassListByTeacherId(teacherAccount.getTeacherId());
+            session.setAttribute("teacher",teacherInfo);
+            session.setAttribute("classList",classList);
+            session.setAttribute("activeTag","home");
             //request.setAttribute("activeTag","home");
             return "redirect:/main";
         }else{

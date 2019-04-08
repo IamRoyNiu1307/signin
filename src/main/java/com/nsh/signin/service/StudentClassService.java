@@ -2,7 +2,7 @@ package com.nsh.signin.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nsh.signin.dao.StudentClassDao;
+import com.nsh.signin.dao.StudentClassMapper;
 import com.nsh.signin.entity.StudentClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class StudentClassService {
     @Autowired
-    private StudentClassDao studentClassDao;
+    private StudentClassMapper studentClassMapper;
 
     /**
      * 根据教师id获取所教所有学生的信息及所在班级的列表
@@ -23,7 +23,7 @@ public class StudentClassService {
      */
     public PageInfo getStudentClassList(String teacherId,Integer pageNumber, Integer pageSize){
         PageHelper.startPage(pageNumber, pageSize);
-        List<StudentClass> studentClassList = studentClassDao.getStudentClassList(teacherId);
+        List<StudentClass> studentClassList = studentClassMapper.getStudentClassList(teacherId);
         PageInfo pageInfo = new PageInfo(studentClassList);
         return pageInfo;
     }
@@ -35,7 +35,7 @@ public class StudentClassService {
      * @return 学生列表
      */
     public List<StudentClass> getAllByClassName(String teacherId,String className){
-        List<StudentClass> studentClassList = studentClassDao.getAllByClassName(teacherId,className);
+        List<StudentClass> studentClassList = studentClassMapper.getAllByClassName(teacherId,className);
         return studentClassList;
     }
 

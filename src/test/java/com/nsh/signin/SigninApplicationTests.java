@@ -2,7 +2,6 @@ package com.nsh.signin;
 
 import com.nsh.signin.api.FaceRegister;
 import com.nsh.signin.api.FaceSearch;
-import com.nsh.signin.dao.StudentAccountDao;
 import com.nsh.signin.entity.StudentAccount;
 import com.nsh.signin.entity.StudentClass;
 import com.nsh.signin.entity.StudentInfo;
@@ -49,19 +48,7 @@ public class SigninApplicationTests {
 //        System.out.println(FaceSearch.search(path));
 //    }
 
-    @Test
-    public void addStudent(){
-        List studentAccountList = new ArrayList();
-        List studentInfoList = new ArrayList();
-        for(int i = 100;i<200;i++){
-            StudentInfo studentInfo = new StudentInfo("201577f0"+i,"学生"+i,i%4+1);
-            StudentAccount studentAccount = new StudentAccount("201577f0"+i,"201577f0"+i,null,0);
-            studentInfoList.add(studentInfo);
-            studentAccountList.add(studentAccount);
-        }
-        studentAccountService.addStudentAccount(studentAccountList);
-        studentInfoService.addStudentInfo(studentInfoList);
-    }
+
 
     @Test
     public void testHour() throws ParseException {
@@ -99,10 +86,6 @@ public class SigninApplicationTests {
         System.out.println(result);
     }
 
-    
-    public void testBranch(){
-        System.out.println(1);
-    }
 
 }
 

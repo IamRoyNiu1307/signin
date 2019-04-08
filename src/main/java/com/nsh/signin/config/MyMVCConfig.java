@@ -1,13 +1,19 @@
 package com.nsh.signin.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.github.pagehelper.PageHelper;
 import com.nsh.signin.handlerInterceptor.LoginHandlerInterceptor;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -46,6 +52,11 @@ public class MyMVCConfig implements WebMvcConfigurer {
                 .excludePathPatterns(excludePathPatternsList);
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/fileUpload/**").addResourceLocations("file:/Users/roy/project/signin/src/main/resources/static/fileUpload/");
+    }
+
     //配置mybatis的分页插件pageHelper
     @Bean
     public PageHelper pageHelper(){
@@ -58,5 +69,7 @@ public class MyMVCConfig implements WebMvcConfigurer {
         pageHelper.setProperties(properties);
         return pageHelper;
     }
+
+
 
 }

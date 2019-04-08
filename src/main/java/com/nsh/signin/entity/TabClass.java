@@ -1,16 +1,15 @@
 package com.nsh.signin.entity;
 
-import java.util.Objects;
-
 public class TabClass {
-    private int id;
+    private Integer id;
+
     private String className;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -19,20 +18,14 @@ public class TabClass {
     }
 
     public void setClassName(String className) {
-        this.className = className;
+        this.className = className == null ? null : className.trim();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TabClass tabClass = (TabClass) o;
-        return id == tabClass.id &&
-                Objects.equals(className, tabClass.className);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, className);
+    public String toString() {
+        return "TabClass{" +
+                "id=" + id +
+                ", className='" + className + '\'' +
+                '}';
     }
 }

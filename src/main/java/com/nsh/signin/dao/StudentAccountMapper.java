@@ -5,13 +5,19 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
-/**
- * @Auther: iamRoyNiu
- * @Date: 2019/1/2 15:34
- */
 @Mapper
-public interface StudentAccountDao {
+public interface StudentAccountMapper {
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(StudentAccount record);
+
+    int insertSelective(StudentAccount record);
+
+    StudentAccount selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(StudentAccount record);
+
+    int updateByPrimaryKey(StudentAccount record);
 
     @Select("select * from student_account where student_id = #{studentId} and student_password = #{studentPassword}")
     public StudentAccount getStudent(StudentAccount student);

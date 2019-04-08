@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nsh.signin.dao.TabMsgMapper">
+  <resultMap id="BaseResultMap" type="com.nsh.signin.entity.TabMsg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="push_date" jdbcType="TIMESTAMP" property="pushDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="teacher_account" jdbcType="VARCHAR" property="teacherAccount" />
+    <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
+    <association property="msgClassList" column="id" select="com.nsh.signin.dao.MsgClassMapper.selectByMsgId"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, content, push_date, status, teacher_account, image_path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tab_msg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getMsgList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tab_msg
+    where teacher_account = #{teacherId,jdbcType=INTEGER} and status=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tab_msg
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nsh.signin.entity.TabMsg">
+    insert into tab_msg (id, title, content, 
+      push_date, status, teacher_account, 
+      image_path)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{pushDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{teacherAccount,jdbcType=VARCHAR}, 
+      #{imagePath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nsh.signin.entity.TabMsg" useGeneratedKeys="true" keyProperty="id">
+    insert into tab_msg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="pushDate != null">
+        push_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="teacherAccount != null">
+        teacher_account,
+      </if>
+      <if test="imagePath != null">
+        image_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pushDate != null">
+        #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="teacherAccount != null">
+        #{teacherAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nsh.signin.entity.TabMsg">
+    update tab_msg
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pushDate != null">
+        push_date = #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="teacherAccount != null">
+        teacher_account = #{teacherAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nsh.signin.entity.TabMsg">
+    update tab_msg
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      push_date = #{pushDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      teacher_account = #{teacherAccount,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

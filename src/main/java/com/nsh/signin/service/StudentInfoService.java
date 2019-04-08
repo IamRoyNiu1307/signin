@@ -1,6 +1,6 @@
 package com.nsh.signin.service;
 
-import com.nsh.signin.dao.StudentInfoDao;
+import com.nsh.signin.dao.StudentInfoMapper;
 import com.nsh.signin.entity.StudentInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 public class StudentInfoService {
 
     @Autowired
-    private StudentInfoDao studentInfoDao;
+    private StudentInfoMapper studentInfostudentInfoMapper;
 
     /**
      * 根据学号获取学生信息
@@ -20,7 +20,7 @@ public class StudentInfoService {
      * @return StudentInfo
      */
     public StudentInfo getStudentInfo(String studentId){
-        return studentInfoDao.getStudentInfo(studentId);
+        return studentInfostudentInfoMapper.getStudentInfo(studentId);
 
     }
 
@@ -30,7 +30,7 @@ public class StudentInfoService {
      * @return 学生姓名
      */
     public String getStudentName(String studentId){
-        return studentInfoDao.getStudentName(studentId);
+        return studentInfostudentInfoMapper.getStudentName(studentId);
     }
 
     /**
@@ -39,7 +39,7 @@ public class StudentInfoService {
      */
     public void addStudentInfo(List<StudentInfo> studentInfos){
         for(StudentInfo each : studentInfos){
-            studentInfoDao.addStudentInfo(each);
+            studentInfostudentInfoMapper.addStudentInfo(each);
         }
     }
 

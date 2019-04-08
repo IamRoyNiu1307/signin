@@ -1,8 +1,7 @@
 package com.nsh.signin.service;
 
-import com.nsh.signin.dao.TeacherInfoDao;
+import com.nsh.signin.dao.TeacherInfoMapper;
 import com.nsh.signin.entity.TeacherInfo;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class TeacherInfoService {
 
     @Autowired
-    private TeacherInfoDao teacherInfoDao;
+    private TeacherInfoMapper teacherInfoMapper;
 
     /**
      * 根据教师id获取教师信息
@@ -18,6 +17,6 @@ public class TeacherInfoService {
      * @return
      */
     public TeacherInfo getTeacherInfo(String teacherId){
-        return teacherInfoDao.getTeacherInfo(teacherId);
+        return teacherInfoMapper.getTeacherInfo(teacherId);
     }
 }

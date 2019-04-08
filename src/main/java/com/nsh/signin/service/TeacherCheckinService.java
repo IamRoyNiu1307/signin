@@ -2,7 +2,7 @@ package com.nsh.signin.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nsh.signin.dao.TeacherCheckinDao;
+import com.nsh.signin.dao.TeacherCheckinMapper;
 import com.nsh.signin.entity.TeacherCheckin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class TeacherCheckinService {
 
     @Autowired
-    private TeacherCheckinDao teacherCheckinDao;
+    private TeacherCheckinMapper teacherCheckinMapper;
 
     /**
      * 根据教师id获取该教师所有的考勤记录
@@ -24,9 +24,9 @@ public class TeacherCheckinService {
      */
     public PageInfo getAllCheckin(String teacherId,Integer pageNumber, Integer pageSize){
         PageHelper.startPage(pageNumber, pageSize);
-        List<TeacherCheckin> teacherCheckinList = teacherCheckinDao.getCheckinList(teacherId);
+        List<TeacherCheckin> teacherCheckinList = teacherCheckinMapper.getCheckinList(teacherId);
         for(TeacherCheckin each : teacherCheckinList){
-            each.setAbsentRate(teacherCheckinDao.getAbsentRate(each.getId())==null?0.00f:teacherCheckinDao.getAbsentRate(each.getId()));
+            each.setAbsentRate(teacherCheckinMapper.getAbsentRate(each.getId())==null?0.00f: teacherCheckinMapper.getAbsentRate(each.getId()));
         }
         PageInfo pageInfo = new PageInfo(teacherCheckinList);
         return pageInfo;

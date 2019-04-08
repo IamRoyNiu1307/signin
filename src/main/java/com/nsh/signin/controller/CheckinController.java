@@ -75,14 +75,13 @@ public class CheckinController {
     /**
      * 关闭签到通道
      * @param data 包含了当前签到通道的id
-     * @param request
      * @return
      */
     @ResponseBody
     @RequestMapping("/closeCheckin")
-    public Map closeCheckin(@RequestBody Map<String,Object> data,HttpServletRequest request){
+    public Map closeCheckin(@RequestBody Map<String,Object> data){
         Map<String,Object> map =new HashMap<>();
-        System.out.println(data.get("checkinId") + " closing checkin...");
+        //System.out.println(data.get("checkinId") + " closing checkin...");
         checkLogService.closeCheckin(Integer.parseInt(data.get("checkinId").toString()));
         map.put("msg","success");
         return map;
@@ -91,14 +90,13 @@ public class CheckinController {
     /**
      * 获取缺勤表
      * @param data
-     * @param request
      * @return
      */
     @ResponseBody
     @RequestMapping("/getAbsentList")
-    public Map getAbsentList(@RequestBody Map<String,Object> data,HttpServletRequest request){
+    public Map getAbsentList(@RequestBody Map<String,Object> data){
         Map<String,Object> map =new HashMap<>();
-        System.out.println(data.get("checkinId") + " get absent list...");
+        //System.out.println(data.get("checkinId") + " get absent list...");
 
         List<Map> absentList = checkLogService.getAbsentList(Integer.parseInt(data.get("checkinId").toString()));
 

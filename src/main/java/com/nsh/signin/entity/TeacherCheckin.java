@@ -1,20 +1,36 @@
 package com.nsh.signin.entity;
 
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.Date;
 
 public class TeacherCheckin {
-    private int id;
+    private Integer id;
+
     private String teacherId;
+
     private Timestamp checkinTime;
+
     private Integer status;
+
     private Float absentRate;
 
-    public int getId() {
+    public TeacherCheckin(String teacherId, Timestamp checkinTime) {
+        this.teacherId=teacherId;
+        this.checkinTime=checkinTime;
+    }
+
+    public TeacherCheckin(Integer id, String teacherId, Timestamp checkinTime, Integer status) {
+        this.id = id;
+        this.teacherId = teacherId;
+        this.checkinTime = checkinTime;
+        this.status = status;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -23,10 +39,10 @@ public class TeacherCheckin {
     }
 
     public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
+        this.teacherId = teacherId == null ? null : teacherId.trim();
     }
 
-    public Timestamp getCheckinTime() {
+    public Date getCheckinTime() {
         return checkinTime;
     }
 
@@ -48,20 +64,5 @@ public class TeacherCheckin {
 
     public void setAbsentRate(Float absentRate) {
         this.absentRate = absentRate;
-    }
-
-    public TeacherCheckin() {
-    }
-
-    public TeacherCheckin(int id, String teacherId, Timestamp checkinTime, Integer status) {
-        this.id = id;
-        this.teacherId = teacherId;
-        this.checkinTime = checkinTime;
-        this.status = status;
-    }
-
-    public TeacherCheckin(String teacherId, Timestamp checkinTime) {
-        this.teacherId = teacherId;
-        this.checkinTime = checkinTime;
     }
 }

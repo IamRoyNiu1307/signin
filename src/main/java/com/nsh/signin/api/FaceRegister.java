@@ -1,8 +1,7 @@
 package com.nsh.signin.api;
-import com.nsh.signin.myconst.WXConst;
+import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.util.*;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -43,7 +42,7 @@ public class FaceRegister {
             String image = Base64Util.encode(bytes);
             Map<String, Object> map = new HashMap<>();
             map.put("image", image);
-            map.put("group_id", WXConst.GROUPID);
+            map.put("group_id", MyConst.GROUPID);
             map.put("user_id", userid);
             map.put("user_info", String.valueOf(System.currentTimeMillis()));
             map.put("liveness_control", "NONE");

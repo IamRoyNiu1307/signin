@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nsh.signin.dao.ScheduleMapper">
+  <resultMap id="BaseResultMap" type="com.nsh.signin.entity.Schedule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+    <result column="workday" jdbcType="VARCHAR" property="workday" />
+    <result column="no" jdbcType="INTEGER" property="no" />
+    <result column="classroom" jdbcType="VARCHAR" property="classroom" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, class_id, course_id, teacher_id, workday, no, classroom
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from schedule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from schedule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nsh.signin.entity.Schedule">
+    insert into schedule (id, class_id, course_id, 
+      teacher_id, workday, no, 
+      classroom)
+    values (#{id,jdbcType=INTEGER}, #{classId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, 
+      #{teacherId,jdbcType=VARCHAR}, #{workday,jdbcType=VARCHAR}, #{no,jdbcType=INTEGER}, 
+      #{classroom,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nsh.signin.entity.Schedule">
+    insert into schedule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="workday != null">
+        workday,
+      </if>
+      <if test="no != null">
+        no,
+      </if>
+      <if test="classroom != null">
+        classroom,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workday != null">
+        #{workday,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=INTEGER},
+      </if>
+      <if test="classroom != null">
+        #{classroom,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nsh.signin.entity.Schedule">
+    update schedule
+    <set>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null">
+        teacher_id = #{teacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="workday != null">
+        workday = #{workday,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        no = #{no,jdbcType=INTEGER},
+      </if>
+      <if test="classroom != null">
+        classroom = #{classroom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nsh.signin.entity.Schedule">
+    update schedule
+    set class_id = #{classId,jdbcType=INTEGER},
+      course_id = #{courseId,jdbcType=INTEGER},
+      teacher_id = #{teacherId,jdbcType=VARCHAR},
+      workday = #{workday,jdbcType=VARCHAR},
+      no = #{no,jdbcType=INTEGER},
+      classroom = #{classroom,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

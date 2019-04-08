@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -26,17 +27,16 @@ public class StudentController {
 
     /**
      * 页面跳转
-     * @param request
      * @param curPage
      * @param map
      * @return
      */
     @RequestMapping("/page")
-    public String toMyStudent(HttpServletRequest request,
+    public String toMyStudent(HttpSession session,
                               @RequestParam(value = "curPage") Integer curPage,
                               Map<String,Object> map){
 
-        TeacherInfo teacher = (TeacherInfo)request.getSession().getAttribute("teacher");
+        TeacherInfo teacher = (TeacherInfo)session.getAttribute("teacher");
 
         //获取学生信息
         PageInfo pageInfo = studentClassService.getStudentClassList(teacher.getTeacherId(),curPage,10);
@@ -49,7 +49,7 @@ public class StudentController {
         map.put("prePage",pageInfo.getPrePage());
         map.put("nextPage",pageInfo.getNextPage());
 
-        request.getSession().setAttribute("activeTag","myStudent");
+        session.setAttribute("activeTag","myStudent");
         return "myStudent";
 
 

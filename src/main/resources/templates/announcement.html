@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏;传入参数-->
+<div th:replace="dashboard::#topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏;传入参数-->
+        <div th:replace="dashboard::#sidebar"></div>
+
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h1 class="h2">我的公告</h1>
+                    <div style="margin: 10px auto">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#pushModal">发布公告</button>
+                    </div>
+                    <table id="tab1" class="table table-hover table-light" style="table-layout: fixed">
+                        <thead>
+                        <th style="visibility:hidden;width:1px">编号</th>
+                        <th>标题</th>
+                        <th style="width: 35%;overflow: hidden">内容</th>
+                        <th>推送</th>
+                        <th>发布时间</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="msg:${msgList}">
+                            <td style="visibility:hidden;width:1px" th:text="${msg.id}"></td>
+                            <td th:text="${msg.title}"></td>
+                            <td th:text="${msg.content}"></td>
+                            <td>
+                                <span th:each="msgClass:${msg.msgClassList}">[[${msgClass.tabClass.className}]]&nbsp;&nbsp;</span>
+                            </td>
+                            <td th:text="${msg.pushDate}"></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm infoEdit">修改</button>
+                                <button class="btn btn-danger btn-sm infoDel"
+                                        data-toggle="modal" data-target="#delModal">删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="pushModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    发布公告
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <form id="pushForm" enctype="multipart/form-data">
+                            <table class="table table-light">
+                                <tbody>
+                                    <tr>
+                                        <td>标题</td>
+                                        <td><input type="text" class="form-control" name="title" id="pushTitle" onblur="checkInput(this)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>内容</td>
+                                        <td><textarea id="pushContent" name="content" style="width: 100%" class="form-control" rows="3" onblur="checkInput(this)"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td>图片</td>
+                                        <td>
+                                            <span class="btn btn-success fileinput-button">
+                                                <span>上传</span>
+                                                <input type="file" name="file" id="file1" onchange="loadFile(this.files[0])" >
+                                            </span>
+                                            <span id="filename" style="vertical-align: middle">未上传文件</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>推送</td>
+                                        <td>
+                                            <div class="form-check" th:each="clazz:${session.classList}">
+                                                <input type="checkbox" class="form-check-input" th:id="${clazz.id}" name="pushClass" th:value="${clazz.id}">
+                                                <label class="form-check-label" th:text="${clazz.className}"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="pushBtn" type="button" class="btn btn-primary">发布
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    发布公告
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <form id="editForm" enctype="multipart/form-data">
+                            <table class="table table-light">
+                                <tbody>
+                                <tr>
+                                    <td>标题</td>
+                                    <td><input type="text" class="form-control" name="title" id="editTitle" onblur="checkInput(this)"></td>
+                                </tr>
+                                <tr>
+                                    <td>内容</td>
+                                    <td><textarea id="editContent" name="content" style="width: 100%;" class="form-control" rows="3" onblur="checkInput(this)"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>图片</td>
+                                    <td>
+                                            <span class="btn btn-success fileinput-button">
+                                                <span>修改图片</span>
+                                                <input type="file" name="file" id="file2" onchange="loadFile1(this.files[0])" >
+                                            </span>
+                                        <span id="filename1" style="vertical-align: middle"></span>
+                                    </td>
+                                </tr>
+                                <input type="hidden" class="form-control" name="id" id="msgId">
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-primary">修改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    提示
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h6>确定删除此公告？</h6>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">取消
+                </button>
+                <button id="delBtn" type="button" class="btn btn-primary">确认
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/static/js/jquery-3.2.1.js" ></script>
+<script type="text/javascript" src="/static/js/popper.min.js" ></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="/static/js/ajaxfileupload.js" ></script>
+<!-- Icons -->
+<script type="text/javascript" src="/static/js/feather.min.js" ></script>
+<!--<script>-->
+<!--feather.replace()-->
+<!--</script>-->
+
+<!-- Graphs -->
+<script type="text/javascript" src="/static/js/Chart.min.js" ></script>
+
+<script th:inline="javascript">
+
+    function loadFile(file){
+        $("#filename").html(file.name);
+    }
+    function loadFile1(file){
+        $("#filename1").html(file.name);
+    }
+
+    //限制上传文件的类型和大小
+    function validate_img(ele){
+        // 返回 KB，保留小数点后两位
+        //alert((ele.files[0].size/(1024*1024)).toFixed(2));
+        var file = ele.val();
+        if(!/.(gif|jpg|jpeg|png|GIF|JPG|bmp)$/.test(file)){
+
+            alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
+            return false;
+        }else{
+            //alert((ele.files[0].size).toFixed(2));
+            //返回Byte(B),保留小数点后两位
+            if(((ele[0].files[0].size).toFixed(2))>=(2*1024*1024)){
+
+                alert("请上传小于2M的图片");
+                return false;
+            }else  return true;
+        }
+        return false;
+
+    }
+    $("#editBtn").click(function () {
+        if($("#file1").val()==""){
+            formSubbmit($("#editForm")[0])
+        }else if(validate_img($("#file1"))){
+            formSubbmit($("#editForm")[0])
+        }
+    })
+    $("#pushBtn").click(function () {
+        if(checkSelect()){
+            if($("#file1").val()==""){
+                formSubbmit($("#pushForm")[0])
+            }else if(validate_img($("#file1"))){
+                formSubbmit($("#pushForm")[0])
+            }
+        }else{
+            alert("请选择推送班级！")
+        }
+
+
+    })
+    function checkInput(e) {
+        if($(e).val()==""){
+            $(e).attr("style","border-color:red")
+        }else{
+            $(e).attr("style","")
+        }
+    }
+    function checkSelect() {
+        if($(".form-check-input:checked").length>0){
+            return true
+        }else{
+            return false
+        }
+    }
+    function formSubbmit(ele) {
+        var form = new FormData(ele);
+        $.ajax({
+            url:"/announcement/push",
+            type:"post",
+            data:form,
+            dataType:"json",
+            async:false,
+            processData:false,
+            contentType:false,
+            success:function(data){
+                if(data.status=="1"){
+                    alert("已提交！")
+                    $('#pushModal').modal('hide')
+                    location.reload()
+                }else {
+                    alert(data.msg)
+                }
+            }
+        });
+    }
+
+    var selectId;
+    $("body").on("click",".infoEdit",function (){
+        var id=$(this).parents("tr").children("td:eq(0)").html()
+        var msgList = [[${msgList}]]
+        var classList = [[${session.classList}]]
+        for(var index in msgList){
+            if(msgList[index].id == id){
+                var selects=[]
+                selectId = id;
+                $("#editTitle").val(msgList[index].title)
+                $("#editContent").val(msgList[index].content)
+                $("#msgId").val(msgList[index].id)
+                $('#editModal').modal('show')
+            }
+        }
+    })
+
+    var delId;
+    $("body").on("click",".infoDel",function (){
+        delId = $(this).parents("tr").children("td:eq(0)").html()
+    })
+    $("body").on("click","#delBtn",function (){
+        var id=delId
+
+        $.ajax({
+            url:"/announcement/del",
+            type:"post",
+            dataType:"json",
+            data:JSON.stringify({"id":id}),
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {
+                if(data.status==1){
+                    $('#delModal').modal('hide')
+                    location.reload()
+                }
+
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

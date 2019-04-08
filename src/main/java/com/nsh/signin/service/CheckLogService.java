@@ -1,9 +1,11 @@
 package com.nsh.signin.service;
 
-import com.nsh.signin.dao.CheckLogDao;
+
+import com.nsh.signin.dao.CheckLogMapper;
 import com.nsh.signin.entity.CurrentCourse;
 import com.nsh.signin.entity.StudentClass;
 import com.nsh.signin.entity.TeacherCheckin;
+import com.nsh.signin.myconst.MyConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import java.util.Map;
 public class CheckLogService {
 
     @Autowired
-    private CheckLogDao checkLogDao;
+    private CheckLogMapper checkLogMapper;
 
     /**
      * 根据教师id查询现在正在进行的课程
@@ -37,14 +39,14 @@ public class CheckLogService {
         String nowDate = dateFormat.format(now);
 
         try {
-            Date no1Start = sdf.parse(nowDate + " 8:00");
-            Date no1End = sdf.parse(nowDate + " 9:50");
-            Date no2Start = sdf.parse(nowDate + " 10:10");
-            Date no2End = sdf.parse(nowDate + " 11:50");
-            Date no3Start = sdf.parse(nowDate + " 14:00");
-            Date no3End = sdf.parse(nowDate + " 15:50");
-            Date no4Start = sdf.parse(nowDate + " 16:10");
-            Date no4End = sdf.parse(nowDate + " 17:50");
+            Date no1Start = sdf.parse(nowDate + " "+ MyConst.FIRST_CLASS_START_TIME);
+            Date no1End = sdf.parse(nowDate + " "+ MyConst.FIRST_CLASS_END_TIME);
+            Date no2Start = sdf.parse(nowDate + " "+ MyConst.SECOND_CLASS_START_TIME);
+            Date no2End = sdf.parse(nowDate + " "+ MyConst.SECOND_CLASS_END_TIME);
+            Date no3Start = sdf.parse(nowDate + " "+ MyConst.THIRD_CLASS_START_TIME);
+            Date no3End = sdf.parse(nowDate + " "+ MyConst.THIRD_CLASS_END_TIME);
+            Date no4Start = sdf.parse(nowDate + " "+ MyConst.FORTH_CLASS_START_TIME);
+            Date no4End = sdf.parse(nowDate + " "+ MyConst.FORTH_CLASS_END_TIME);
 
             if(now.compareTo(no1Start)>0&&now.compareTo(no1End)<0) no=1;
             if(now.compareTo(no2Start)>0&&now.compareTo(no2End)<0) no=2;
@@ -56,7 +58,7 @@ public class CheckLogService {
         }
 
 
-        return checkLogDao.getCurrentCourse(teacherId,no);
+        return checkLogMapper.getCurrentCourse(teacherId,no);
 
     }
 
@@ -72,11 +74,11 @@ public class CheckLogService {
         Timestamp now = new Timestamp(new Date().getTime());
         //创建考勤表 生成考勤记录
         TeacherCheckin teacherCheckin = new TeacherCheckin(teacherId,now);
-        checkLogDao.addTeacherCheckin(teacherCheckin);
+        checkLogMapper.addTeacherCheckin(teacherCheckin);
         //将学号添加到考勤列表中
         for(StudentClass studentClass : studentClassList){
 
-            checkLogDao.addStudentsToCheckinList(studentClass.getStudentId(), teacherCheckin.getId());
+            checkLogMapper.addStudentsToCheckinList(studentClass.getStudentId(), teacherCheckin.getId());
 
         }
 
@@ -89,19 +91,19 @@ public class CheckLogService {
      * @return 缺勤表
      */
     public Map getCheckStatus(String studentId){
-        return checkLogDao.getCheckStatus(studentId);
+        return checkLogMapper.getCheckStatus(studentId);
     }
 
     public void setStatus(String studentId,int teacherCheckinId){
-        checkLogDao.setStatus(studentId,teacherCheckinId);
+        checkLogMapper.setStatus(studentId,teacherCheckinId);
     }
 
     public void closeCheckin(int checkinId){
-        checkLogDao.closeCheckin(checkinId);
+        checkLogMapper.closeCheckin(checkinId);
     }
 
     public List<Map> getAbsentList(int checkinId){
-        List<Map> absentList = checkLogDao.getAbsentList(checkinId);
+        List<Map> absentList = checkLogMapper.getAbsentList(checkinId);
         return absentList;
     }
 

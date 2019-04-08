@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface StudentClassDao {
+public interface StudentClassMapper {
 
     @Select("SELECT DISTINCT si.student_id ,si.student_name as studentName,tab_class.class_name as className\n" +
             "FROM `schedule` s,tab_class,student_info si\n" +

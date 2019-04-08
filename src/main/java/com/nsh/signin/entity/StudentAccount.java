@@ -1,29 +1,21 @@
 package com.nsh.signin.entity;
 
-import java.util.Objects;
-
 public class StudentAccount {
-    private int id;
+    private Integer id;
+
     private String studentId;
+
     private String studentPassword;
+
     private String openid;
+
     private Integer hasRegisted;
 
-    public StudentAccount() {
-    }
-
-    public StudentAccount(String studentId, String studentPassword, String openid, Integer hasRegisted) {
-        this.studentId = studentId;
-        this.studentPassword = studentPassword;
-        this.openid = openid;
-        this.hasRegisted = hasRegisted;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,7 +24,7 @@ public class StudentAccount {
     }
 
     public void setStudentId(String studentId) {
-        this.studentId = studentId;
+        this.studentId = studentId == null ? null : studentId.trim();
     }
 
     public String getStudentPassword() {
@@ -40,7 +32,7 @@ public class StudentAccount {
     }
 
     public void setStudentPassword(String studentPassword) {
-        this.studentPassword = studentPassword;
+        this.studentPassword = studentPassword == null ? null : studentPassword.trim();
     }
 
     public String getOpenid() {
@@ -48,7 +40,7 @@ public class StudentAccount {
     }
 
     public void setOpenid(String openid) {
-        this.openid = openid;
+        this.openid = openid == null ? null : openid.trim();
     }
 
     public Integer getHasRegisted() {
@@ -57,33 +49,5 @@ public class StudentAccount {
 
     public void setHasRegisted(Integer hasRegisted) {
         this.hasRegisted = hasRegisted;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentAccount{" +
-                "id=" + id +
-                ", studentId='" + studentId + '\'' +
-                ", studentPassword='" + studentPassword + '\'' +
-                ", openid='" + openid + '\'' +
-                ", hasRegisted='" + hasRegisted + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentAccount that = (StudentAccount) o;
-        return id == that.id &&
-                Objects.equals(studentId, that.studentId) &&
-                Objects.equals(studentPassword, that.studentPassword) &&
-                Objects.equals(openid, that.openid) &&
-                Objects.equals(hasRegisted, that.hasRegisted);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, studentId, studentPassword, openid, hasRegisted);
     }
 }

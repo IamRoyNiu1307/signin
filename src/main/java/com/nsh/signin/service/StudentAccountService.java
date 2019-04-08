@@ -1,6 +1,6 @@
 package com.nsh.signin.service;
 
-import com.nsh.signin.dao.StudentAccountDao;
+import com.nsh.signin.dao.StudentAccountMapper;
 import com.nsh.signin.entity.StudentAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class StudentAccountService {
     @Autowired
-    private StudentAccountDao studentAccountDao;
+    private StudentAccountMapper studentAccountMapper;
 
     /**
      * 验证账号
@@ -23,7 +23,7 @@ public class StudentAccountService {
      *         3 账号已经被绑定
      */
     public int checkout(StudentAccount studentAccount){
-        StudentAccount student = studentAccountDao.getStudent(studentAccount);
+        StudentAccount student = studentAccountMapper.getStudent(studentAccount);
         if(student!=null){
             if(student.getOpenid()!=null&&!"".equals(student.getOpenid())){
                 return 3;
@@ -39,7 +39,7 @@ public class StudentAccountService {
      * @param studentAccount 校园网账号
      */
     public void bindAccount(StudentAccount studentAccount){
-        studentAccountDao.bindAccount(studentAccount);
+        studentAccountMapper.bindAccount(studentAccount);
     }
 
     /**
@@ -48,7 +48,7 @@ public class StudentAccountService {
      * @return
      */
     public StudentAccount getStudentByOpenid(String openid){
-        return studentAccountDao.getStudentByOpenid(openid);
+        return studentAccountMapper.getStudentByOpenid(openid);
     }
 
     /**
@@ -56,7 +56,7 @@ public class StudentAccountService {
      * @param studentid 学号
      */
     public void setRegisted(String studentid) {
-        studentAccountDao.setRegisted(studentid);
+        studentAccountMapper.setRegisted(studentid);
     }
 
     /**
@@ -65,7 +65,7 @@ public class StudentAccountService {
      * @return
      */
     public boolean getRegisted(String studentid){
-        Integer status = studentAccountDao.getRegisted(studentid);
+        Integer status = studentAccountMapper.getRegisted(studentid);
         return status == 0?false:true;
     }
 
@@ -75,7 +75,7 @@ public class StudentAccountService {
      */
     public void addStudentAccount(List<StudentAccount> studentAccounts){
         for(StudentAccount each : studentAccounts){
-            studentAccountDao.addStudentAccount(each);
+            studentAccountMapper.addStudentAccount(each);
         }
     }
 }

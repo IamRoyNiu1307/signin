@@ -4,7 +4,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 import com.nsh.signin.entity.StudentAccount;
 import com.nsh.signin.entity.StudentInfo;
-import com.nsh.signin.myconst.WXConst;
+import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.service.CheckLogService;
 import com.nsh.signin.service.StudentAccountService;
 import com.nsh.signin.service.StudentInfoService;
@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 账号Controller
+ * 账号Controller---微信端
  */
-@Controller
+@RestController
 @RequestMapping("/wx")
 public class AccountController {
 
@@ -39,7 +39,6 @@ public class AccountController {
      * @param studentAccount 微信端传来的校园网账号密码
      * @return Map
      */
-    @ResponseBody
     @RequestMapping(value = "/bind",method = RequestMethod.POST)
     public Map toLogin(@RequestBody StudentAccount studentAccount){
         Map map = new HashMap();
@@ -78,7 +77,6 @@ public class AccountController {
      * @param code 微信登录后得到的code
      * @return Map
      */
-    @ResponseBody
     @RequestMapping(value = "/getopenid",method = RequestMethod.GET)
     public Map getOpenid(String code){
         Map map = new HashMap();
@@ -89,8 +87,8 @@ public class AccountController {
             return map;
         }
         //通过login code去换取openId
-        String param = "appid=" + WXConst.APPID + "&secret=" + WXConst.APPSECRET + "&js_code=" + code + "&grant_type=authorization_code";
-        String data = HttpRequestUtil.sendGet(WXConst.WxGetOpenIdUrl, param);
+        String param = "appid=" + MyConst.APPID + "&secret=" + MyConst.APPSECRET + "&js_code=" + code + "&grant_type=authorization_code";
+        String data = HttpRequestUtil.sendGet(MyConst.WxGetOpenIdUrl, param);
         //解析成json格式
         JsonObject json = jp.parse(data).getAsJsonObject();
 
@@ -111,7 +109,6 @@ public class AccountController {
      * @param openid 微信号的唯一标识
      * @return Map
      */
-    @ResponseBody
     @RequestMapping(value = "/getStudentInfo",method = RequestMethod.POST)
     public Map getStudentInfo(@RequestBody String openid){
         Map map = new HashMap();
@@ -143,7 +140,6 @@ public class AccountController {
      * @param studentId
      * @return Map
      */
-    @ResponseBody
     @RequestMapping(value = "/getCurrentCheckin",method = RequestMethod.POST)
     public Map getCheckStatus(@RequestBody String studentId){
         Map<String,Object> map = new HashMap<>();

@@ -1,18 +1,19 @@
 package com.nsh.signin.entity;
 
-import java.util.Objects;
-
 public class CheckLog {
-    private int id;
+    private Integer id;
+
     private String studentId;
+
     private Integer teacherCheckinId;
+
     private String status;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -21,7 +22,7 @@ public class CheckLog {
     }
 
     public void setStudentId(String studentId) {
-        this.studentId = studentId;
+        this.studentId = studentId == null ? null : studentId.trim();
     }
 
     public Integer getTeacherCheckinId() {
@@ -37,22 +38,6 @@ public class CheckLog {
     }
 
     public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CheckLog checkLog = (CheckLog) o;
-        return id == checkLog.id &&
-                Objects.equals(studentId, checkLog.studentId) &&
-                Objects.equals(teacherCheckinId, checkLog.teacherCheckinId) &&
-                Objects.equals(status, checkLog.status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, studentId, teacherCheckinId, status);
+        this.status = status == null ? null : status.trim();
     }
 }

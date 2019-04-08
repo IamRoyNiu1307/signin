@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -24,17 +25,16 @@ public class MyCheckinController {
 
     /**
      * 页面跳转
-     * @param request
      * @param curPage 当前页码
      * @param map
      * @return
      */
     @RequestMapping("/page")
-    public String toMyCheckin(HttpServletRequest request,
+    public String toMyCheckin(HttpSession session,
                               @RequestParam(value = "curPage") Integer curPage,
                               Map<String,Object> map){
 
-        TeacherInfo teacher = (TeacherInfo)request.getSession().getAttribute("teacher");
+        TeacherInfo teacher = (TeacherInfo)session.getAttribute("teacher");
 
         //获取所有考勤记录，pageSize:10 每页十条记录
         PageInfo pageInfo = teacherCheckinService.getAllCheckin(teacher.getTeacherId(),curPage,10);
@@ -47,7 +47,7 @@ public class MyCheckinController {
         map.put("prePage",pageInfo.getPrePage());
         map.put("nextPage",pageInfo.getNextPage());
 
-        request.getSession().setAttribute("activeTag","myCheckin");
+        session.setAttribute("activeTag","myCheckin");
         return "myCheckin";
     }
 

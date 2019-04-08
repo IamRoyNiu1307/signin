@@ -1,6 +1,6 @@
 package com.nsh.signin.service;
 
-import com.nsh.signin.dao.TeacherAccountDao;
+import com.nsh.signin.dao.TeacherAccountMapper;
 import com.nsh.signin.entity.TeacherAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class TeacherAccountService {
 
     @Autowired
-    private TeacherAccountDao teacherAccountDao;
+    private TeacherAccountMapper teacherAccountMapper;
 
     /**
      * 教师登录验证账号密码
@@ -17,7 +17,7 @@ public class TeacherAccountService {
      * @return
      */
     public boolean checkout(TeacherAccount teacherAccount){
-        TeacherAccount teacher = teacherAccountDao.getTeacher(teacherAccount);
+        TeacherAccount teacher = teacherAccountMapper.getTeacher(teacherAccount);
         return teacher==null?false:true;
     }
 }

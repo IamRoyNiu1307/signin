@@ -57,8 +57,8 @@
         <div th:replace="dashboard::#sidebar"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <div class="row" style="height:700px">
-                <div class="col-md-9">
+            <div class="row" style="height:750px">
+                <div class="col-md-12">
                     <h1 class="h2">我的学生</h1>
                     <div>
                         <table id="myStudent" class="table table-hover table-light">
@@ -75,7 +75,12 @@
                                     <td th:text="${student.studentName}"></td>
                                     <td th:text="${student.className}"></td>
                                     <td>0.0%</td>
-                                    <td><a class="btn btn-primary btn-sm" style="color:white">详细记录</a></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm"
+                                           data-toggle="modal" data-target="#infoModal">详细记录</button>
+                                        <button class="btn btn-info btn-sm"
+                                           data-toggle="modal" data-target="#msgModal">推送消息</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -113,6 +118,85 @@
         </main>
     </div>
 </div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    缺勤记录
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-light">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>课程</th>
+                                    <th>教室</th>
+                                </tr>
+                            </thead>
+                            <tbody id="">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    消息推送
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-light">
+                            <tr>
+                                <td>学号</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>消息类型</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>内容</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

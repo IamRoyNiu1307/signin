@@ -1,14 +1,22 @@
 package com.nsh.signin.entity;
 
-import java.util.Objects;
-
 public class StudentInfo {
-    private int id;
+    private Integer id;
+
     private String studentId;
+
     private String studentName;
+
     private Integer classId;
 
     public StudentInfo() {
+    }
+
+    public StudentInfo(Integer id, String studentId, String studentName, Integer classId) {
+        this.id = id;
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.classId = classId;
     }
 
     public StudentInfo(String studentId, String studentName, Integer classId) {
@@ -17,11 +25,11 @@ public class StudentInfo {
         this.classId = classId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -30,7 +38,7 @@ public class StudentInfo {
     }
 
     public void setStudentId(String studentId) {
-        this.studentId = studentId;
+        this.studentId = studentId == null ? null : studentId.trim();
     }
 
     public String getStudentName() {
@@ -38,7 +46,7 @@ public class StudentInfo {
     }
 
     public void setStudentName(String studentName) {
-        this.studentName = studentName;
+        this.studentName = studentName == null ? null : studentName.trim();
     }
 
     public Integer getClassId() {
@@ -47,21 +55,5 @@ public class StudentInfo {
 
     public void setClassId(Integer classId) {
         this.classId = classId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentInfo that = (StudentInfo) o;
-        return id == that.id &&
-                Objects.equals(studentId, that.studentId) &&
-                Objects.equals(studentName, that.studentName) &&
-                Objects.equals(classId, that.classId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, studentId, studentName, classId);
     }
 }

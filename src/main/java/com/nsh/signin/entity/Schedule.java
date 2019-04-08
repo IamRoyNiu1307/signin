@@ -1,21 +1,25 @@
 package com.nsh.signin.entity;
 
-import java.util.Objects;
-
 public class Schedule {
-    private int id;
+    private Integer id;
+
     private Integer classId;
+
     private Integer courseId;
+
     private String teacherId;
+
     private String workday;
+
     private Integer no;
 
+    private String classroom;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,7 +44,7 @@ public class Schedule {
     }
 
     public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
+        this.teacherId = teacherId == null ? null : teacherId.trim();
     }
 
     public String getWorkday() {
@@ -48,7 +52,7 @@ public class Schedule {
     }
 
     public void setWorkday(String workday) {
-        this.workday = workday;
+        this.workday = workday == null ? null : workday.trim();
     }
 
     public Integer getNo() {
@@ -59,15 +63,12 @@ public class Schedule {
         this.no = no;
     }
 
-    public Schedule() {
+    public String getClassroom() {
+        return classroom;
     }
 
-    public Schedule(int id, Integer classId, Integer courseId, String teacherId, String workday, Integer no) {
-        this.id = id;
-        this.classId = classId;
-        this.courseId = courseId;
-        this.teacherId = teacherId;
-        this.workday = workday;
-        this.no = no;
+    public void setClassroom(String classroom) {
+        this.classroom = classroom == null ? null : classroom.trim();
     }
+
 }

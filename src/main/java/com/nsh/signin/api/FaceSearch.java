@@ -1,6 +1,6 @@
 package com.nsh.signin.api;
 
-import com.nsh.signin.myconst.WXConst;
+import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.util.*;
 
 import java.util.*;
@@ -29,7 +29,7 @@ public class FaceSearch {
             Map<String, Object> map = new HashMap<>();
             map.put("image", image);
             map.put("liveness_control", "LOW");
-            map.put("group_id_list", WXConst.GROUPID);
+            map.put("group_id_list", MyConst.GROUPID);
             map.put("image_type", "BASE64");
             map.put("quality_control", "HIGH");
 
