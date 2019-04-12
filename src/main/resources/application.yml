@@ -7,6 +7,7 @@ spring:
   mvc:
     favicon:
       enabled: true                                                                                   #开启自定义图标
+    static-path-pattern: /static/**
   datasource:
     url: jdbc:mysql://localhost/school?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
@@ -27,3 +28,7 @@ mybatis:
   mapper-locations: classpath:/mybatis/mappers/*.xml                                                   #mapper.xml位置
   configuration:
     map-underscore-to-camel-case: true                                                                 #开启驼峰命名
+
+logging:
+  level:
+    com.nsh.signin.dao.*: debug

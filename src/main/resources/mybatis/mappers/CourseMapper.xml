@@ -6,13 +6,20 @@
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_name
+    course.id, course_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from course
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectCourseByClassId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    DISTINCT <include refid="Base_Column_List" />
+    from `schedule`,course
+    where `schedule`.class_id= #{classId} and `schedule`.course_id = course.id
+	order by course.id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from course

@@ -2,10 +2,12 @@ package com.nsh.signin.controller;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
+import com.nsh.signin.entity.Course;
 import com.nsh.signin.entity.StudentAccount;
 import com.nsh.signin.entity.StudentInfo;
 import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.service.CheckLogService;
+import com.nsh.signin.service.CourseService;
 import com.nsh.signin.service.StudentAccountService;
 import com.nsh.signin.service.StudentInfoService;
 import com.nsh.signin.util.HttpRequestUtil;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +33,8 @@ public class AccountController {
     private StudentInfoService studentInfoService;
     @Autowired
     private CheckLogService checkLogService;
+    @Autowired
+    private CourseService courseService;
 
     private JsonParser jp=new JsonParser();
 
@@ -124,11 +129,13 @@ public class AccountController {
         //如果绑定过校园网账号，则根据学号获取学生信息
         if(student!=null) {
             studentInfo = studentInfoService.getStudentInfo(student.getStudentId());
+            List<Course> courseList = courseService.selectCourseByClassId(studentInfo.getClassId());
+            map.put("studentInfo",studentInfo);
+            map.put("courseList",courseList);
         }
 
         map.put("status",1);
         map.put("msg","读取完成");
-        map.put("studentInfo",studentInfo);
         map.put("has_registed",student==null?0:student.getHasRegisted());
 
         return map;

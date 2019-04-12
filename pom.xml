@@ -101,8 +101,13 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.1.19</version>
+        </dependency>
+
     </dependencies>
-    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>

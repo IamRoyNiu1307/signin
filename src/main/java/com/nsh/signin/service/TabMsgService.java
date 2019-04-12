@@ -35,4 +35,13 @@ public class TabMsgService {
     public void updateByPrimaryKeySelective(TabMsg tabMsg){
         tabMsgMapper.updateByPrimaryKeySelective(tabMsg);
     }
+
+    /**
+     * 通过班级id查询该班级的所有通知
+     * @param classId 班级id
+     * @return
+     */
+    public List<TabMsg> getMsgListByClassId(int classId){
+        return tabMsgMapper.selectByClassId(classId);
+    }
 }

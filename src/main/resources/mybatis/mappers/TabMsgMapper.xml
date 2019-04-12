@@ -9,10 +9,10 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="teacher_account" jdbcType="VARCHAR" property="teacherAccount" />
     <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
-    <association property="msgClassList" column="id" select="com.nsh.signin.dao.MsgClassMapper.selectByMsgId"></association>
+    <collection property="msgClassList" column="id" select="com.nsh.signin.dao.MsgClassMapper.selectByMsgId"></collection>
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, content, push_date, status, teacher_account, image_path
+    tab_msg.id, title, content, push_date, `status`, teacher_account, image_path
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,7 +26,14 @@
     from tab_msg
     where teacher_account = #{teacherId,jdbcType=INTEGER} and status=1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="selectByClassId" resultType="com.nsh.signin.entity.TabMsg">
+    select
+    <include refid="Base_Column_List" />
+    from tab_msg,msg_class
+    where tab_msg.id=msg_class.msg_id and msg_class.class_id = #{classId}
+    order by push_date desc
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tab_msg
     where id = #{id,jdbcType=INTEGER}
   </delete>

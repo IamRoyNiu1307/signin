@@ -20,4 +20,6 @@ public interface TabMsgMapper {
     int updateByPrimaryKey(TabMsg record);
 
     List<TabMsg> getMsgList(String teacherId);
+
+    List<TabMsg> selectByClassId(int classId);
 }

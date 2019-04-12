@@ -1,6 +1,8 @@
 package com.nsh.signin.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.nsh.signin.entity.MsgClass;
+import com.nsh.signin.entity.TabClass;
 import com.nsh.signin.entity.TabMsg;
 import com.nsh.signin.entity.TeacherInfo;
 import com.nsh.signin.myconst.MyConst;
@@ -9,19 +11,13 @@ import com.nsh.signin.service.TabMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 公告管理
@@ -87,7 +83,7 @@ public class AnnouncementController {
         Map result = new HashMap();
         TeacherInfo teacher = (TeacherInfo)session.getAttribute("teacher");
         String path = "";
-        String filaPath = "";
+        String dbFilePath = "";
         if(!file.isEmpty()){
             //获取文件名
             String fileName = file.getOriginalFilename();
@@ -95,9 +91,10 @@ public class AnnouncementController {
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
             //重新生成文件名
             fileName = UUID.randomUUID()+suffixName;
-            filaPath = MyConst.IMAGE_PATH+fileName;
+            //保存在数据库中的图片路径
+            dbFilePath = MyConst.ANNO_IMAGE_PATH+fileName;
             //指定本地文件夹存储图片
-            String filePath = MyConst.UPLOAD_FILEPATH;
+            String filePath = MyConst.ANNO_UPLOAD_FILEPATH;
             try {
                 //将图片保存到static文件夹里
                 path = filePath+fileName;
@@ -113,10 +110,10 @@ public class AnnouncementController {
             TabMsg tabMsg = tabMsgService.selectByPrimaryKey(id);
             tabMsg.setTitle(title);
             tabMsg.setContent(content);
-            tabMsg.setImagePath(filaPath);
+            tabMsg.setImagePath(dbFilePath);
             tabMsgService.updateByPrimaryKeySelective(tabMsg);
         }else {
-            TabMsg tabMsg = new TabMsg(title, content, new Date(), 1, teacher.getTeacherId(), filaPath);
+            TabMsg tabMsg = new TabMsg(title, content, new Date(), 1, teacher.getTeacherId(), dbFilePath);
             tabMsgService.insertSelective(tabMsg);
             System.out.println(tabMsg.getId());
             msgClassService.insertRecordBatch(tabMsg.getId(), classes);
@@ -142,4 +139,6 @@ public class AnnouncementController {
         result.put("status",1);
         return result;
     }
+
+
 }
