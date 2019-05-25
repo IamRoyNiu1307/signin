@@ -16,17 +16,28 @@ public class LeaveApp {
 
     private String detail;
 
+    private Integer status;
+
+    private String teacherId;
+
+    private TeacherInfo teacherInfo;
+
+    private Course course;
+
     private List<LeaveAppImage> leaveAppImages;
+
 
     public LeaveApp() {}
 
-    public LeaveApp(Integer id, String studentId, Integer courseId, Date date, String reason, String detail) {
+    public LeaveApp(Integer id, String studentId, Integer courseId, Date date, String reason, String detail, Integer status, String teacherId) {
         this.id = id;
         this.studentId = studentId;
         this.courseId = courseId;
         this.date = date;
         this.reason = reason;
         this.detail = detail;
+        this.status = status;
+        this.teacherId = teacherId;
     }
 
     public Integer getId() {
@@ -75,5 +86,45 @@ public class LeaveApp {
 
     public void setDetail(String detail) {
         this.detail = detail == null ? null : detail.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public List<LeaveAppImage> getLeaveAppImages() {
+        return leaveAppImages;
+    }
+
+    public void setLeaveAppImages(List<LeaveAppImage> leaveAppImages) {
+        this.leaveAppImages = leaveAppImages;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public TeacherInfo getTeacherInfo() {
+        return teacherInfo;
+    }
+
+    public void setTeacherInfo(TeacherInfo teacherInfo) {
+        this.teacherInfo = teacherInfo;
     }
 }

@@ -25,6 +25,8 @@ public class ScheduleService {
         return classCourseList;
     }
 
-
+    public String selectTeacherIdByCourseId(int classId,int courseId){
+        return scheduleMapper.selectTeacherIdByCourseId(classId,courseId);
+    }
 
 }

@@ -13,6 +13,8 @@ import java.util.List;
 public class StudentClassService {
     @Autowired
     private StudentClassMapper studentClassMapper;
+    @Autowired
+    private TeacherCheckinService teacherCheckinService;
 
     /**
      * 根据教师id获取所教所有学生的信息及所在班级的列表
@@ -24,6 +26,9 @@ public class StudentClassService {
     public PageInfo getStudentClassList(String teacherId,Integer pageNumber, Integer pageSize){
         PageHelper.startPage(pageNumber, pageSize);
         List<StudentClass> studentClassList = studentClassMapper.getStudentClassList(teacherId);
+        for(StudentClass each : studentClassList){
+            each.setRate(teacherCheckinService.selectRate(teacherId,each.getStudentId()));
+        }
         PageInfo pageInfo = new PageInfo(studentClassList);
         return pageInfo;
     }

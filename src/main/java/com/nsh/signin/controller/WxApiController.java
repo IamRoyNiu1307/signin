@@ -4,20 +4,21 @@ import cn.hutool.core.date.DateUtil;
 import com.nsh.signin.dao.MsgClassMapper;
 import com.nsh.signin.entity.LeaveApp;
 import com.nsh.signin.entity.LeaveAppImage;
+import com.nsh.signin.entity.MsgClass;
 import com.nsh.signin.entity.TabMsg;
 import com.nsh.signin.myconst.MyConst;
 import com.nsh.signin.service.LeaveAppImageService;
 import com.nsh.signin.service.LeaveAppService;
+import com.nsh.signin.service.ScheduleService;
 import com.nsh.signin.service.TabMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.alibaba.fastjson.JSONObject;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/wx")
@@ -31,6 +32,8 @@ public class WxApiController {
     private LeaveAppService leaveAppService;
     @Autowired
     private LeaveAppImageService leaveAppImageService;
+    @Autowired
+    private ScheduleService scheduleService;
 
     @RequestMapping("/getMsgList/{classId}")
     public Map getMsgList(@PathVariable("classId")int classId){
@@ -52,12 +55,14 @@ public class WxApiController {
                                       @RequestParam(value = "date", required = false)String date,
                                       @RequestParam(value = "reason", required = false)String reason,
                                       @RequestParam(value = "detail", required = false)String detail,
-                                      @RequestParam(value = "studentId", required = false)String studentId){
+                                      @RequestParam(value = "studentId", required = false)String studentId,
+                                      @RequestParam(value = "classId", required = false)Integer classId){
 
         Map result = new HashMap();
         //file为空时，说明是先插入数据
         if(file==null){
-            LeaveApp leaveApp = new LeaveApp(id, studentId, courseId, DateUtil.parse(date).toSqlDate(), reason, detail);
+            String teacherId = scheduleService.selectTeacherIdByCourseId(classId,courseId);
+            LeaveApp leaveApp = new LeaveApp(id, studentId, courseId, DateUtil.parse(date).toSqlDate(), reason, detail,0,teacherId);
             leaveAppService.insert(leaveApp);
             result.put("status",1);
         }else {
@@ -93,6 +98,15 @@ public class WxApiController {
 
 
 
+        return result;
+    }
+
+    @RequestMapping("/getAppList")
+    public Map getMyApp(@RequestParam(value = "studentId", required = false)String studentId,
+                        @RequestParam(value = "status", required = false)Integer status){
+        Map result = new HashMap();
+        List<LeaveApp> leaveApps = leaveAppService.selectByStudentId(studentId,status);
+        result.put("appList",leaveApps);
         return result;
     }
 

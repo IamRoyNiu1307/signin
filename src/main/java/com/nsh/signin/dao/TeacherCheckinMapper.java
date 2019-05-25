@@ -1,7 +1,10 @@
 package com.nsh.signin.dao;
 
+import com.nsh.signin.entity.Record;
+import com.nsh.signin.entity.Statement;
 import com.nsh.signin.entity.TeacherCheckin;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -30,4 +33,10 @@ public interface TeacherCheckinMapper {
             "from (select count(*) total,`status`,cl.teacher_checkin_id checkinId from check_log cl where cl.teacher_checkin_id = #{checkinId} group by `status`)temp\n" +
             "where temp.`status` = '未签到') absentRate")
     public Float getAbsentRate(int checkinId);
+
+    List<Statement> selectStatement(String teacherId);
+
+    float selectRate(@Param("teacherId") String teacherId,@Param("studentId") String studentId);
+
+    List<Record> selectRecord(@Param("teacherId") String teacherId,@Param("studentId") String studentId);
 }

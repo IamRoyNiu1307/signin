@@ -3,6 +3,8 @@ package com.nsh.signin.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nsh.signin.dao.TeacherCheckinMapper;
+import com.nsh.signin.entity.Record;
+import com.nsh.signin.entity.Statement;
 import com.nsh.signin.entity.TeacherCheckin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +32,17 @@ public class TeacherCheckinService {
         }
         PageInfo pageInfo = new PageInfo(teacherCheckinList);
         return pageInfo;
+    }
+
+    public List<Statement> selectStatement(String teacherId){
+        return teacherCheckinMapper.selectStatement(teacherId);
+    }
+
+    public float selectRate(String teacherId,String studentId){
+        return teacherCheckinMapper.selectRate(teacherId,studentId);
+    }
+
+    public List<Record> selectRecord(String teacherId, String studentId){
+        return teacherCheckinMapper.selectRecord(teacherId,studentId);
     }
 }

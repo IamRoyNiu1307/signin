@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+        /*#myCourse td{*/
+        /*height: 75px;*/
+        /*}*/
+        /*#myCourse tr{*/
+        /*line-height: 75px;*/
+        /*}*/
+
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+<body>
+<!--引入侧边栏;传入参数-->
+<div th:replace="dashboard::#topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏;传入参数-->
+        <div th:replace="dashboard::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="row" style="height:750px">
+                <div class="col-md-12">
+                    <h1 class="h2">假条审批</h1>
+                    <div>
+                        <table id="myStudent" class="table table-hover table-light">
+                            <thead>
+                                <th>编号</th>
+                                <th>学号</th>
+                                <th>请假课程</th>
+                                <th>请假原因</th>
+                                <th>详情</th>
+                                <th>图片</th>
+                                <th>请假日期</th>
+                                <th>操作</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="app:${leaveAppList}">
+                                    <td th:text="${app.id}"></td>
+                                    <td th:text="${app.studentId}"></td>
+                                    <td th:text="${app.course.courseName}"></td>
+                                    <td th:text="${app.reason}"></td>
+                                    <td th:text="${app.detail}"></td>
+                                    <td>
+                                        <th:block th:each="image:${app.leaveAppImages}">
+                                            <image style="width: 30%" th:src="${image.imagePath}"></image>
+                                        </th:block>
+                                    </td>
+                                    <td th:text="${app.date}"></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm pass" >批准</button>
+                                        <button class="btn btn-danger btn-sm unpass" >拒绝</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    缺勤记录
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-light">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>课程</th>
+                                    <th>教室</th>
+                                </tr>
+                            </thead>
+                            <tbody id="">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    消息推送
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-light">
+                            <tr>
+                                <td>学号</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>消息类型</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>内容</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js" ></script>
+<script type="text/javascript" src="/static/js/jquery-3.2.1.js" ></script>
+<script type="text/javascript" src="/static/js/popper.min.js" ></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="/static/js/feather.min.js" ></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script type="text/javascript" src="/static/js/Chart.min.js" ></script>
+
+
+</body>
+<script>
+    $("body").on("click",".pass",function (){
+        var id=$(this).parents("tr").children("td:eq(0)").html()
+        checkApp(id,'pass')
+    })
+    $("body").on("click",".unpass",function (){
+        var id=$(this).parents("tr").children("td:eq(0)").html()
+        checkApp(id,'unpass')
+    })
+
+    function checkApp(id,todo) {
+        $.ajax({
+            url:"/checkApp/check",
+            type:"post",
+            dataType:"json",
+            data:{
+                id:id,
+                todo:todo
+            },
+            success: function (data) {
+                if(data.status==1){
+                    location.reload()
+                }
+
+            }
+        })
+    }
+</script>
+</html>

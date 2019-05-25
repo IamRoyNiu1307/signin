@@ -3,6 +3,7 @@ package com.nsh.signin.dao;
 import com.nsh.signin.entity.ClassCourse;
 import com.nsh.signin.entity.Schedule;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ScheduleMapper {
             "from `schedule` s,course,tab_class,teacher_info\n" +
             "where s.course_id = course.id and s.class_id = tab_class.id and s.teacher_id = teacher_info.teacher_id and s.teacher_id = #{teacherId}")
     public List<ClassCourse> getClassCourseList(String teacherId);
+
+    String selectTeacherIdByCourseId(@Param("classId") int classId,@Param("courseId") int courseId);
 }

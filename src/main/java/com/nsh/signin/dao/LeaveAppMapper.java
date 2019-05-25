@@ -2,6 +2,9 @@ package com.nsh.signin.dao;
 
 import com.nsh.signin.entity.LeaveApp;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface LeaveAppMapper {
@@ -17,5 +20,7 @@ public interface LeaveAppMapper {
 
     int updateByPrimaryKey(LeaveApp record);
 
-    LeaveApp selectByStudentId(String studentId);
+    List<LeaveApp> selectByStudentId(@Param("studentId") String studentId,@Param("status") Integer status);
+
+    List<LeaveApp> selectByTeacherId(String teacherId);
 }

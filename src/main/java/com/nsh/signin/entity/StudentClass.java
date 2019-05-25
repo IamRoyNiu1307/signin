@@ -4,6 +4,7 @@ public class StudentClass {
     private String studentId;
     private String studentName;
     private String className;
+    private float rate;
 
     public StudentClass() {
     }
@@ -36,6 +37,14 @@ public class StudentClass {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
     @Override

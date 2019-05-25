@@ -1,10 +1,12 @@
 package com.nsh.signin.controller;
 
+import com.nsh.signin.entity.Statement;
 import com.nsh.signin.entity.TabClass;
 import com.nsh.signin.entity.TeacherAccount;
 import com.nsh.signin.entity.TeacherInfo;
 import com.nsh.signin.service.TabClassService;
 import com.nsh.signin.service.TeacherAccountService;
+import com.nsh.signin.service.TeacherCheckinService;
 import com.nsh.signin.service.TeacherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,8 @@ public class TeacherAccountController {
     private TeacherInfoService teacherInfoService;
     @Autowired
     private TabClassService tabClassService;
-
+    @Autowired
+    private TeacherCheckinService teacherCheckinService;
     /**
      * 页面跳转，重定向到后台首页
      * @param request
@@ -55,9 +58,19 @@ public class TeacherAccountController {
         if(result){
             TeacherInfo teacherInfo = teacherInfoService.getTeacherInfo(teacherAccount.getTeacherId());
             List<TabClass> classList = tabClassService.getTabClassListByTeacherId(teacherAccount.getTeacherId());
+            List<Statement> statements = teacherCheckinService.selectStatement(teacherInfo.getTeacherId());
+            String[] checkinDate = new String[statements.size()];
+            int[] num = new int[statements.size()];
+            for(int i=0;i<statements.size();i++){
+                checkinDate[i]=statements.get(i).getCheckinTime();
+                num[i] = statements.get(i).getNum();
+            }
+
             session.setAttribute("teacher",teacherInfo);
             session.setAttribute("classList",classList);
             session.setAttribute("activeTag","home");
+            session.setAttribute("checkinDate",checkinDate);
+            session.setAttribute("num",num);
             //request.setAttribute("activeTag","home");
             return "redirect:/main";
         }else{

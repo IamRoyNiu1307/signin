@@ -5,6 +5,8 @@ import com.nsh.signin.entity.LeaveApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LeaveAppService {
 
@@ -35,7 +37,11 @@ public class LeaveAppService {
         return leaveAppMapper.updateByPrimaryKey(record);
     }
 
-    public LeaveApp selectByStudentId(String studentId) {
-        return leaveAppMapper.selectByStudentId(studentId);
+    public List<LeaveApp> selectByStudentId(String studentId,Integer status) {
+        return leaveAppMapper.selectByStudentId(studentId,status);
+    }
+
+    public List<LeaveApp> selectByTeacherId(String teacherId) {
+        return leaveAppMapper.selectByTeacherId(teacherId);
     }
 }
